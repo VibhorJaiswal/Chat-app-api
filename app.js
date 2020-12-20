@@ -40,8 +40,12 @@ app.post('/login', (req, res) => {
 
             if (err) throw err;
 
+            const credentials = {
+                id: result[0].id
+            }
+
             if (passAsRes == true) {
-                res.send(`welcome ${req.body.name}`);
+                res.send(credentials);
                 return;
             }
             else
@@ -104,8 +108,9 @@ app.post('/getMsg', (req, res) => {
 
     const id_1 = req.body.id_1g;
     const id_2 = req.body.id_2g;
+    let limit = parseInt(req.body.limit);
 
-    con.query('select msg, dateAndTime from messages where id_1 = ? and id_2 = ? limit ?', [id_1, id_2, 50], (err, result) => {
+    con.query('select msg, dateAndTime from messages where id_1 = ? and id_2 = ? limit ?', [id_1, id_2, limit], (err, result) => {
 
         if (err) throw err;
 
